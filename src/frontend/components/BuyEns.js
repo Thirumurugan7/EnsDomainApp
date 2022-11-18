@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Loading from './Loading';
+import React, { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const BuyEns = ({ marketplace, ENSContract }) => {
   const [allListings, setAllListings] = useState([]);
@@ -7,7 +7,7 @@ const BuyEns = ({ marketplace, ENSContract }) => {
   const [buyLoading, setBuyLoading] = useState(false);
 
   useEffect(() => {
-    if (marketplace !== '') {
+    if (marketplace !== "") {
       allListing();
     }
   }, [marketplace]);
@@ -42,13 +42,13 @@ const BuyEns = ({ marketplace, ENSContract }) => {
   };
 
   const buyListing = async (item) => {
-    setBuyLoading(true)
+    setBuyLoading(true);
     try {
       const tx = await marketplace.buyENS(item.itemId, {
         value: item.price,
       });
       await tx.wait();
-      alert('Congrats! You have bought the ENS', item.name);
+      alert("Congrats! You have bought the ENS", item.name);
       setBuyLoading(false);
       allListing();
     } catch (error) {
@@ -59,43 +59,42 @@ const BuyEns = ({ marketplace, ENSContract }) => {
 
   return (
     <div>
-        <h2 className='text-center mb-5'>Explore and Buy ENS</h2>
+      <h2 className="text-center mb-5">Explore and Buy ENS</h2>
       {loading ? (
-        <Loading val='Loading...'/>
+        <Loading val="Loading..." />
       ) : allListings.length === 0 ? (
         <div>There are currently no ENS for Sale</div>
       ) : (
-        <div className='row' >
-        {allListings.map((item, i) => (
-        <div className='col-lg-4 col-md-6 col-sm-6 mb-4' key={i}>
-          <div className='card'>
-            <div className='card-body'>
-              <h5 className='card-title'>{item.name}</h5>
-              <h6 className='card-subtitle mb-2 text-muted'>
-                Price: {item.price / 10 ** 18} ETH
-              </h6>
-              <button
-                className='btn btn-primary'
-                onClick={() => buyListing(item)}
-              >
-                {buyLoading ? (
-            <span>
-              <span
-                className='spinner-border spinner-border-sm me-2'
-                role='status'
-                aria-hidden='true'
-              ></span>
-              <span>Processing..</span>
-            </span>
-          ) : (
-            <span>Buy This ENS</span>
-          )}
-              </button>
+        <div className="row">
+          {allListings.map((item, i) => (
+            <div className="col-lg-4 col-md-6 col-sm-6 mb-4" key={i}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{item.name}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Price: {item.price / 10 ** 18} ETH
+                  </h6>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => buyListing(item)}
+                  >
+                    {buyLoading ? (
+                      <span>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span>Processing..</span>
+                      </span>
+                    ) : (
+                      <span>Buy This ENS</span>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
-        )
-        )}
+          ))}
         </div>
       )}
     </div>

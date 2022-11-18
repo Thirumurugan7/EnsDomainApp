@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Alchemy, Network } from 'alchemy-sdk';
-import { ethers } from 'ethers';
-import Loading from './Loading';
+import React, { useEffect, useState } from "react";
+import { Alchemy, Network } from "alchemy-sdk";
+import { ethers } from "ethers";
+import Loading from "./Loading";
 
 const ListItem = ({ EnsNameAddress, marketplace, ENSContract, account }) => {
   const [ensNames, setEnsNames] = useState([]);
@@ -19,12 +19,12 @@ const ListItem = ({ EnsNameAddress, marketplace, ENSContract, account }) => {
     setLoadPage(true);
     const config = {
       apiKey: process.env.ALCHEMY_API,
-      network: Network.ETH_ROPSTEN,
+      network: Network.ETH_GOERLI,
     };
 
     const alchemy = new Alchemy(config);
 
-    const ensContractAddress = '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85';
+    const ensContractAddress = "0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85";
     const ens = await alchemy.nft.getNftsForOwner(account, {
       contractAddresses: [ensContractAddress],
     });
@@ -45,7 +45,7 @@ const ListItem = ({ EnsNameAddress, marketplace, ENSContract, account }) => {
       let priceInEth = ethers.utils.parseEther(price.toString());
       const tx2 = await marketplace.listENS(ensName, tokId, priceInEth);
       await tx2.wait();
-      alert('Awesome! You have now Listed your Item for Sale!');
+      alert("Awesome! You have now Listed your Item for Sale!");
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -54,39 +54,39 @@ const ListItem = ({ EnsNameAddress, marketplace, ENSContract, account }) => {
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       {loadPage ? (
-        <Loading val='Loading...'/>
+        <Loading val="Loading..." />
       ) : (
         <div>
-          <h2 className='mb-4'>You Own the Following ENS Domains:</h2>
+          <h2 className="mb-4">You Own the Following ENS Domains:</h2>
 
           {ensNames.length === 0 ? (
             <div>
-              <h2 className='lead'>Sorry You do Not Own any ENS Domains!</h2>
+              <h2 className="lead">Sorry You do Not Own any ENS Domains!</h2>
             </div>
           ) : loading ? (
-            <Loading val='Please Wait... Transaction is being Processed!'/>
+            <Loading val="Please Wait... Transaction is being Processed!" />
           ) : (
             ensNames.map((na, i) => (
-              <div className='input-group mb-3' key={i}>
+              <div className="input-group mb-3" key={i}>
                 <input
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={na.title}
                   disabled
                 />
                 <input
-                  type='number'
-                  className='form-control'
+                  type="number"
+                  className="form-control"
                   onChange={(e) => setPrice(e.target.value)}
-                  placeholder='Enter the Price in ETH at which you want to List'
+                  placeholder="Enter the Price in ETH at which you want to List"
                   required
                 />
                 <button
-                  className='btn btn-outline-primary'
-                  type='button'
-                  id='button-addon2'
+                  className="btn btn-outline-primary"
+                  type="button"
+                  id="button-addon2"
                   onClick={() => listForSale(na.tokenId.toString(), na.title)}
                 >
                   List This ENS

@@ -1,8 +1,8 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
-/** @type import('hardhat/config').HardhatUserConfig */
+
 module.exports = {
-  solidity: "0.8.17",
+  solidity: "0.8.9",
   networks: {
     goerli: {
       url: process.env.GOERLI_RPC,
@@ -13,6 +13,6 @@ module.exports = {
     artifacts: "./src/backend/artifacts",
     sources: "./src/backend/contracts",
     cache: "./src/backend/cache",
-    tests: "./src/backend/tests",
+    tests: "./src/backend/test",
   },
 };
